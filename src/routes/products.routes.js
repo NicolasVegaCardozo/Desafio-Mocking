@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getProducts, getProduct, postProduct, putProduct, deleteProduct } from "../controllers/product.controller.js";
 import { passportError, authorization } from "../utils/messageErrors.js";
-import { generateMockProducts } from '../controllers/mockingController.js';
+import { generateMockProducts } from '../controllers/mocking.controller.js';
 
 
 const productRouter = Router()
