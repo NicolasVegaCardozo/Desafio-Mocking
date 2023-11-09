@@ -40,17 +40,18 @@ export const getProduct = async (req, res) => {
 }
 
 export const postProduct = async (req, res) => {
-
     const { title, description, code, price, stock, category } = req.body
 
     try {
         const product = await productModel.create({ title, description, code, price, stock, category })
+        
+        console.log(product);
 
-        if (product) {
+        /*if (product) {
             return res.status(201).send(product)
         }
 
-        res.status(404).send({ error: "Producto no encontrado" })
+        res.status(404).send({ error: "Producto no encontrado" })*/
 
     } catch (error) {
         if (error.code == 11000) {
