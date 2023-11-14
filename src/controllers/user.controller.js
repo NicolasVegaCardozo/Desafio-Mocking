@@ -1,5 +1,13 @@
 import userModel from '../models/user.models';
 const postUser = async (req, res) => {
+	if (!first_name || !last_name || !email) {
+		CustomError.createError({
+			name: "User creation error",
+			cause: generateUserErrorInfo({ first_name, last_name, age, email }),
+			message: "Error Trying to create User",
+			code: EErrors.INVALID_TYPES_ERROR
+		});
+	}
 	try {
 		if (!req.user) {
 			return res.status(400).send({ mensaje: 'Usuario existente' });
