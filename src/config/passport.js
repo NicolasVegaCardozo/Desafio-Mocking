@@ -6,6 +6,9 @@ import jwt, { ExtractJwt } from 'passport-jwt';
 import { createHash, validatePassword } from '../utils/bcrypt.js';
 import userModel from '../models/user.models.js';
 
+//IMPORT LOGGER
+import logger from '../utils/loggers.js'
+
 const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;
 
@@ -43,8 +46,10 @@ const localRegister = () => {
 						password: passwordHash,
 					});
 					req.user = userCreated;
+					logger.info('User created')
 					return done(null, userCreated);
 				} catch (error) {
+					logger.error(error);
 					return done(error);
 				}
 			}
@@ -70,6 +75,7 @@ const localLogin = () => {
 
 					return done(null, false);
 				} catch (error) {
+					logger.error(error);
 					return done(error);
 				}
 			}
@@ -99,9 +105,11 @@ const githubRegister = () => {
 							age: 18,
 							password: 'password',
 						});
+						logger.info('User created')
 						done(null, userCreated);
 					}
 				} catch (error) {
+					logger.error(error);
 					done(error);
 				}
 			}
@@ -126,6 +134,7 @@ const jwtLogin = () => {
 				try {
 					return done(null, jwt_payload);
 				} catch (error) {
+					logger.error(error)
 					return done(error);
 				}
 			}

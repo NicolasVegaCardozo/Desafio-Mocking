@@ -1,5 +1,6 @@
 import ticketModel from '../models/tickets.models.js';
 import { v4 as uuidv4 } from 'uuid'
+import logger from '../utils/loggers.js';
 
 const getTickets = async (req, res) => {
 	try {
@@ -22,6 +23,7 @@ const createTicket = async (req, res) => {
 		const ticketGenerado = await ticketModel.findOne({ code: ticket.code });
 		res.status(201).send({ response: 'Ticket generado con éxito', message: ticketGenerado });
 	} catch (error) {
+		logger.error(`Error al crear ticket: ${error}`);
 		res.status(500).send({ mensaje: `Error al crear el ticket ${error}` });
 	}
 };

@@ -15,14 +15,15 @@ import messageModel from './models/messages.models.js';
 import productModel from './models/products.models.js';
 import handlebarsRouter from './routes/handlebars.routes.js';
 import errorHandler from './middlewares/errors/errorHandler.js';
+import logger from './utils/loggers.js';
 
 const app = express();
 const PORT = 8080;
 
 // Server
 const server = app.listen(PORT, () => {
-	console.log(`Servidor desde puerto: ${PORT}`);
-	console.log(`http://localhost:${PORT}`);
+	logger.info(`Servidor desde puerto: ${PORT}`);
+	logger.info(`http://localhost:${PORT}`);
 });
 
 const io = new Server(server);
@@ -74,7 +75,7 @@ mongoose
 // Conexión con socket.io
 
 io.on('connection', socket => {
-	console.log('Conexión con Socket.io');
+	logger.info('Conexión con Socket.io');
 
 	socket.on('load', async () => {
 		const data = await productModel.paginate({}, { limit: 5 });

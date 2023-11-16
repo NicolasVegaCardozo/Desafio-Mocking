@@ -7,6 +7,8 @@ import sessionRouter from './session.routes.js';
 import routerHandlebars from './handlebars.routes.js';
 import mailingRouter from './mail.routes.js';
 import ticketRouter from './tickets.routes.js';
+import mockingProductsRouter from './mockingProducts.routes.js';
+import loggerTestRouter from './loggersTest.routes.js'
 
 const router = Router();
 
@@ -17,6 +19,8 @@ router.use('/api/users', userRouter);
 router.use('/api/sessions', sessionRouter);
 router.use('/api/mail', mailingRouter);
 router.use('/api/tickets', ticketRouter);
+router.use('/api/mockingproducts', mockingProductsRouter)
+router.use("/api/loggerTest", loggerTestRouter)
 
 router.use('/static', routerHandlebars);
 
