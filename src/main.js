@@ -16,6 +16,8 @@ import productModel from './models/products.models.js';
 import handlebarsRouter from './routes/handlebars.routes.js';
 import errorHandler from './middlewares/errors/errorHandler.js';
 import logger from './utils/loggers.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express'
 
 const app = express();
 const PORT = 8080;
@@ -109,6 +111,23 @@ io.on('connection', socket => {
 		socket.emit('mensajes', messages);
 	});
 });
+
+//SwaggerOptions
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.1.0',
+        info: {
+            title: 'Documentacion del curso de Backend',
+            decription: 'API Coderhouse Backend'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+console.log(__dirname)
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 // Routes
 app.use('/static', express.static(path.join(__dirname, 'public')));
