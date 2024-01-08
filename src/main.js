@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import { engine } from 'express-handlebars';
@@ -70,7 +69,7 @@ app.use(passport.session());
 /* no va a ser necesario porque ya se conecta antes cuando se crea la sesión*/
 
 mongoose
-	.connect(process.env.MONGO_DB)
+	.connect(process.env.MONGO_UR)
 	.then(() => console.log('DB conectada'))
 	.catch(error => console.log(`Error en conexión a MongoDB Atlas:  ${error}`));
 
