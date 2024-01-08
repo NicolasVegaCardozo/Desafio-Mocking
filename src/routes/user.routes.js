@@ -1,17 +1,22 @@
-import { Router } from "express";
-import passport from "passport";
+import { Router } from 'express';
+import passport from 'passport';
+import usersController from '../controllers/user.controller.js';
+import multer from 'multer';
 
-const userRouter = Router()
+const upload = multer({ dest: 'documents/' });
 
-userRouter.post('/', passport.authenticate('register'), async (req, res) => {
-    try {
-        if (!req.user) {
-            return res.status(400).send({ mensaje: 'Usuario ya existente' })
-        }
-        return res.status(200).send({ mensaje: 'Usuario creado' })
-    } catch (error) {
-        res.status(500).send({ mensaje: `Error al crear usuario ${error}` })
-    }
-})
+const userRouter = Router();
 
-export default userRouter
+userRouter.post('/', passport.authenticate('register'), usersController.postUser);
+
+userRouter.get('/', usersController.getUser);
+
+userRouter.post('/recovery', usersController.recoveryPassword);
+
+userRouter.post('/resetpassword/:token', usersController.resetPassword);
+
+userRouter.post('/:uid/documents', upload.array('documents'), usersController.uploadDocuments);
+
+userRouter.delete('/:uid', usersController.deleteUser);
+
+export default userRouter;
